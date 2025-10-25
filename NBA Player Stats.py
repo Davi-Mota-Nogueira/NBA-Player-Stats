@@ -6,7 +6,17 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _(mo):
-    mo.md(r"""# Analysis of NBA Data from Analyst Builder""")
+    mo.md(
+        r"""
+    # Analysis of NBA Data from Analyst Builder
+    ## Questions to Answer:
+
+    - Which players lead their seasons in scoring, rebounding, and playmaking - and how efficient are they?
+    - How do players from different eras (1990s, 2000s, 2010s, 2020s) compare in size, style, and performance?
+    - Which teams, positions, or player types consistently produce top performers?
+    - Based on the data, who deserves the MVP crown - and how does your pick compare to the official NBA MVP?
+    """
+    )
     return
 
 
@@ -268,6 +278,45 @@ def _(mo):
     |Chris Paul(8.9 ast)|Luka Doncic(8.7 ast)|Chris Paul(8.9 ast)|
     """
     )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(
+        r"""
+    ## Compare efficiency stats (TS% vs usage%) - do volume scorers sacrifice efficiency?
+    True Shooting Percentage is a mesaure to see the efficiency of shooting(field goal, three points and free throws)
+
+    Usage Percentage is the statistics of team plays that the player have contributed, the ball has passed throught him.
+    ## Identify most improved players across seasons (biggest jump in points/rebounds/assists).
+    """
+    )
+    return
+
+
+@app.cell
+def _(nba_data, pl):
+    volume_socrers_all_time = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('pts',descending=True))
+    top_true_shooting = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('ts_pct',descending=True))
+    top_usage_rate = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('usg_pct',descending=True))
+    return top_true_shooting, top_usage_rate
+
+
+@app.cell
+def _(pl, top_usage_rate):
+    # Filtering players by points, more than 5 and 10
+    #top_usage_rate.filter(pl.col('pts') > 5).collect()
+    top_usage_rate.filter(pl.col('pts') > 10).collect()
+    return
+
+
+@app.cell
+def _(pl, top_true_shooting):
+    # Filtering players by points, more than 5, 10, 20
+    #top_true_shooting.filter(pl.col('pts') > 5).collect()
+    #top_true_shooting.filter(pl.col('pts') > 10).collect()
+    top_true_shooting.filter(pl.col('pts') > 20).collect()
     return
 
 
