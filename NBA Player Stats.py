@@ -24,7 +24,8 @@ def _(mo):
 def _():
     import marimo as mo
     import polars as pl
-    return mo, pl
+    import seaborn as sns
+    return mo, pl, sns
 
 
 @app.cell
@@ -281,6 +282,53 @@ def _(mo):
     return
 
 
+@app.cell
+def _(mo):
+    mo.md(
+        r"""
+    ## In Conclusion
+    The list of whom has more appearances at top 5 for each category in history is shown below:
+
+    ### Points:
+    - LeBron James: 15🥇
+    - Kobe Bryant: 12🥈
+    - Allen Iverson: 8🥉
+    - Kevin Durant: 8🥉
+    - James Harden: 8🥉
+    - Shaquille O'Neal: 7
+    - Giannis Antetokounmpo: 6
+    - Carmelo Anthony: 6
+    - Dwayne Wade: 5
+    - Joel Embiid: 4
+
+    ### Rebounds:
+    - Dwight Howard: 11🥇
+    - Andre Drummond: 8🥈
+    - Tim Duncan: 8🥈
+    - Kevin Garnett: 7🥉
+    - Ben Wallace: 6
+    - Shaquille O'Neal: 6
+    - DeAndre Jordan: 6
+    - Rudy Gobert: 6
+    - Dikembe Mutombo: 5
+    - Marcus Camby: 5
+
+    ### Assists:
+    - Chris Paul: 14🥇
+    - Jason Kidd: 12🥈
+    - Steve Nash: 9🥉
+    - Rajon Rondo: 7
+    - Deron Williams: 7
+    - Russel Westbrook: 6
+    - John Wall: 6
+    - James: Harden: 5
+    - Stephon Marbury: 5
+    - Gary Payton: 5
+    """
+    )
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -289,7 +337,6 @@ def _(mo):
     True Shooting Percentage is a mesaure to see the efficiency of shooting(field goal, three points and free throws)
 
     Usage Percentage is the statistics of team plays that the player have contributed, the ball has passed throught him.
-    ## Identify most improved players across seasons (biggest jump in points/rebounds/assists).
     """
     )
     return
@@ -297,10 +344,17 @@ def _(mo):
 
 @app.cell
 def _(nba_data, pl):
-    volume_socrers_all_time = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('pts',descending=True))
+    volume_scorers_all_time = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('pts',descending=True))
     top_true_shooting = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('ts_pct',descending=True))
     top_usage_rate = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('usg_pct',descending=True))
     return top_true_shooting, top_usage_rate
+
+
+@app.cell
+def _(nba_data, pl):
+    volume_rebounders_all_time = pl.LazyFrame(data=nba_data['player_name','reb','ts_pct','usg_pct','season'].sort('reb',descending=True))
+    volume_assisters_all_time = pl.LazyFrame(data=nba_data['player_name','ast','ts_pct','usg_pct','season'].sort('ast',descending=True))
+    return
 
 
 @app.cell
@@ -317,6 +371,66 @@ def _(pl, top_true_shooting):
     #top_true_shooting.filter(pl.col('pts') > 5).collect()
     #top_true_shooting.filter(pl.col('pts') > 10).collect()
     top_true_shooting.filter(pl.col('pts') > 20).collect()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(
+        r"""
+    ## Identify most improved players across seasons (biggest jump in points/rebounds/assists).
+    Let's verify per best top 5 players of each category in history
+
+    ### Points
+    - James Harden: 36.1 pts(2018-19)
+    - Kobe Bryant: 35.4 pts(2005-06)
+    - Joel Embiid: 33.1 pts(2022-23)
+    - Allen Iverson: 33 pts(2005-06)
+    - Luka Doncic: 32.4 pts(2022-23)
+
+    ### Rebounds
+    - Danny Fortson: 16.3 reb(2000-01)
+    - Dennis Rodman: 16.1 reb(1996-97)
+    - Andre Drummond: 16 reb(2017-18)
+    - Ben Wallace: 15.4 reb(2002-03)
+    - Kevin Love & DeAndre Jordan: 15.2 reb(2010-11 & 2017-18)
+
+    ### Assists
+    - Rajon Rondo: 11.7 ast(2011-12)
+    - Russell Westbrook: 11.7 ast(2020-21)
+    - Steve Nash: 11.6 ast(2006-07)
+    - Chris Paul: 11.6 ast(2007-08)
+    - Mark Jackson: 11.4 ast(1996-97)
+    """
+    )
+    return
+
+
+@app.cell
+def _():
+    #volume_scorers_all_time.collect()
+    #volume_rebounders_all_time.collect()
+    #volume_assisters_all_time.collect()
+    return
+
+
+@app.cell
+def _(nba_data):
+    james_harden = nba_data.sql("SELECT pts,reb,ast,season FROM self WHERE player_name like 'James Harden' ORDER BY season")
+    kobe_bryant = nba_data.sql("SELECT pts,reb,ast,season FROM self WHERE player_name like 'Kobe Bryant' ORDER BY season")
+    joel_embiid = nba_data.sql("SELECT pts,reb,ast,season FROM self WHERE player_name like 'Joel Embiid' ORDER BY season")
+    allen_iverson = nba_data.sql("SELECT pts,reb,ast,season FROM self WHERE player_name like 'Allen Iverson' ORDER BY season")
+    luka_doncic = nba_data.sql("SELECT pts,reb,ast,season FROM self WHERE player_name like 'Luka Doncic' ORDER BY season")
+    lebron_james = nba_data.sql("SELECT pts,reb,ast,season FROM self WHERE player_name like 'LeBron James' ORDER BY season")
+    return (luka_doncic,)
+
+
+@app.cell
+def _(luka_doncic, sns):
+    season = luka_doncic['season']
+    basket_data = luka_doncic['pts']
+    sns.set_theme(style='whitegrid')
+    sns.lineplot(x=season, y=basket_data)
     return
 
 
