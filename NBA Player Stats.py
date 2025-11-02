@@ -1,13 +1,12 @@
 import marimo
 
-__generated_with = "0.17.0"
+__generated_with = "0.17.6"
 app = marimo.App(width="medium")
 
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
+    mo.md(r"""
     # Analysis of NBA Data from Analyst Builder
     ## Questions to Answer:
 
@@ -15,8 +14,7 @@ def _(mo):
     - How do players from different eras (1990s, 2000s, 2010s, 2020s) compare in size, style, and performance?
     - Which teams, positions, or player types consistently produce top performers?
     - Based on the data, who deserves the MVP crown - and how does your pick compare to the official NBA MVP?
-    """
-    )
+    """)
     return
 
 
@@ -24,20 +22,22 @@ def _(mo):
 def _():
     import marimo as mo
     import polars as pl
-    import seaborn as sns
-    return mo, pl, sns
+    import matplotlib.pyplot as plt
+    return mo, pl, plt
 
 
 @app.cell
 def _(pl):
-    nba_data = pl.read_csv('all_seasons.csv')
+    nba_data = pl.read_csv('NBA_Players_Stats/all_seasons.csv')
     nba_data
     return (nba_data,)
 
 
 @app.cell
 def _(mo):
-    mo.md(r"""## Analysing the 90's""")
+    mo.md(r"""
+    ## Analysing the 90's
+    """)
     return
 
 
@@ -61,8 +61,7 @@ def _():
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
+    mo.md(r"""
     #### Points
     |1996-97(CHI)|1997-98(CHI)|1998-99(SAS)|1999-00(LAL)|
     |------------|------------|------------|------------|
@@ -89,14 +88,15 @@ def _(mo):
     |Kevin Johnson (9.3 ast)|Mark Jackson (8.7 ast)|Stephon Marbury (8.9 ast)|Sam Cassel (9 ast)|
     |Jason Kidd (9 ast)|Stephon Marbury (8.6 ast)|Gary Payton (8.7 ast)|Terrel Brandon (8.9 ast)|
     |Rod Strickland (8.9 ast)|John Stockton (8.5 ast)|Terrel Brandon (8.6 ast)|Gary Payton (8.9 ast)|
-    """
-    )
+    """)
     return
 
 
 @app.cell
 def _(mo):
-    mo.md(r"""## Analysing 2000's""")
+    mo.md(r"""
+    ## Analysing 2000's
+    """)
     return
 
 
@@ -126,8 +126,7 @@ def _():
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
+    mo.md(r"""
     #### Points
     |2000-01(LAL)|2001-02(LAL)|2002-03(SAS)|2003-04(DET)|2004-05(SAS)|2005-06(MIA)|2006-07(SAS)|2007-08(BOS)|2008-09(LAL)|2009-10(LAL)|
     |------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|
@@ -154,14 +153,15 @@ def _(mo):
     |Nick Van Exel (8.5 ast)|Gary Payton (9 ast)|Gary Payton (8.3 ast)|Steve Nash(8.8 ast)|Jason Kidd (8.3 ast)|Brevin Knight (8.8 ast)|Jason Kidd (9.2 ast)|Deron Williams (10.5 ast)|Gilbert Arenas(10 ast)|Deron Williams (10.5 ast)|
     |Mike Bibby (8.4 ast)|Baron Davis (8.5 ast)|Stephon Marbury (8.1 ast)|Baron Davis (7.5 ast)|Stephon Marbury ( 8.1 ast)|Chauncey Billups (8.6 ast)|Chris Paul (8.9 ast)|Jason Kidd (10.1 ast)|Steve Nash(9.7 ast)|Rajon Rondo (9.8 ast)|
     |Gary Payton (8.1 ast)|Terrel Brandon (8.3 ast)|John Stockton (7.7 ast)|Sam Cassell (7.3 ast)|Allen Iverson (7.9 ast)|Jason Kidd (8.4 ast)|Baron Davis (8.1 ast)|Jammal Tinsley (8.4 ast)|Jose Calderon (8.9 ast)|Jason Kidd (9.1 ast)|
-    """
-    )
+    """)
     return
 
 
 @app.cell
 def _(mo):
-    mo.md(r"""## Analysing 2010`s""")
+    mo.md(r"""
+    ## Analysing 2010`s
+    """)
     return
 
 
@@ -191,8 +191,7 @@ def _():
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
+    mo.md(r"""
     #### Points
     |2010-11(DAL)|2011-12(MIA)|2012-13(MIA)|2013-14(SAS)|2014-15(GSW)|2015-16(CAV)|2016-17(GSW)|2017-18(GSW)|2018-19(TOR)|2019-20(LAL)|
     |------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|
@@ -219,14 +218,15 @@ def _(mo):
     |Deron Williams(10.3 ast)|Chris Paul(9.1 ast)|Greivis Vasquez(9 ast)|John Wall(8.8 ast)|Ty Lawson(9.6 ast)|John Wall(10.2 ast)|Russell Westbrook(10.4 ast)|LeBron James(9.1 ast)|Kyle Lowry(8.7 ast)|Luka Doncic(8.8 ast)|
     |Chris Paul(9.8 ast)|Jose Calderon(8.8 ast)|Jrue Holiday(8 ast)|Ty Lawson(8.8 ast)|Ricky Rubio(8.8 ast)|Chris Paul(10 ast)|Chris Paul(9.2 ast)|James Harden(8.8 ast)|LeBron James(8.3 ast)|Ricky Rubio(8.8 ast)|
     |Jose Calderon(8.9 ast)|Deron Williams(8.7 ast)|Deron Williams(7.7 ast)|Kendall Marshall(8.8 ast)|Russell Westbrook(8.6 ast)|Ricky Rubio(8.7 ast)|Ricky Rubio(9.1 ast)|Rajon Rondo(8.2 ast)|Jeff Teague(8.2 ast)|Ben Simmons(8 ast)|
-    """
-    )
+    """)
     return
 
 
 @app.cell
 def _(mo):
-    mo.md(r"""## Analysing 2020's""")
+    mo.md(r"""
+    ## Analysing 2020's
+    """)
     return
 
 
@@ -249,8 +249,7 @@ def _():
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
+    mo.md(r"""
     #### Points
     |2020-21(MIL)|2021-22(GSW)|2022-23(DEN)|
     |------------|------------|------------|
@@ -277,15 +276,13 @@ def _(mo):
     |Trae Young(9.4 ast)|Trae Young(9.7 ast)|Trae Young(10.2 ast)|
     |Draymond Green(8.9 ast)|Dejount Murray(9.2 ast)|Nikola Jokic(9.8 ast)|
     |Chris Paul(8.9 ast)|Luka Doncic(8.7 ast)|Chris Paul(8.9 ast)|
-    """
-    )
+    """)
     return
 
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
+    mo.md(r"""
     ## In Conclusion
     The list of whom has more appearances at top 5 for each category in history is shown below:
 
@@ -324,44 +321,36 @@ def _(mo):
     - James: Harden: 5
     - Stephon Marbury: 5
     - Gary Payton: 5
-    """
-    )
+    """)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""
+    mo.md(r"""
     ## Compare efficiency stats (TS% vs usage%) - do volume scorers sacrifice efficiency?
     True Shooting Percentage is a mesaure to see the efficiency of shooting(field goal, three points and free throws)
 
     Usage Percentage is the statistics of team plays that the player have contributed, the ball has passed throught him.
-    """
-    )
+    """)
     return
 
 
 @app.cell
 def _(nba_data, pl):
     volume_scorers_all_time = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('pts',descending=True))
+    volume_rebounders_all_time = pl.LazyFrame(data=nba_data['player_name','reb','ts_pct','usg_pct','season'].sort('reb',descending=True))
+    volume_assisters_all_time = pl.LazyFrame(data=nba_data['player_name','ast','ts_pct','usg_pct','season'].sort('ast',descending=True))
     top_true_shooting = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('ts_pct',descending=True))
     top_usage_rate = pl.LazyFrame(data=nba_data['player_name','pts','ts_pct','usg_pct','season'].sort('usg_pct',descending=True))
     return top_true_shooting, top_usage_rate
 
 
 @app.cell
-def _(nba_data, pl):
-    volume_rebounders_all_time = pl.LazyFrame(data=nba_data['player_name','reb','ts_pct','usg_pct','season'].sort('reb',descending=True))
-    volume_assisters_all_time = pl.LazyFrame(data=nba_data['player_name','ast','ts_pct','usg_pct','season'].sort('ast',descending=True))
-    return
-
-
-@app.cell
 def _(pl, top_usage_rate):
     # Filtering players by points, more than 5 and 10
-    #top_usage_rate.filter(pl.col('pts') > 5).collect()
-    top_usage_rate.filter(pl.col('pts') > 10).collect()
+    top_usage_rate.filter(pl.col('pts') > 5).collect()
+    #top_usage_rate.filter(pl.col('pts') > 10).collect()
     return
 
 
@@ -369,15 +358,14 @@ def _(pl, top_usage_rate):
 def _(pl, top_true_shooting):
     # Filtering players by points, more than 5, 10, 20
     #top_true_shooting.filter(pl.col('pts') > 5).collect()
-    #top_true_shooting.filter(pl.col('pts') > 10).collect()
-    top_true_shooting.filter(pl.col('pts') > 20).collect()
+    top_true_shooting.filter(pl.col('pts') > 10).collect()
+    #top_true_shooting.filter(pl.col('pts') > 20).collect()
     return
 
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
+    mo.md(r"""
     ## Identify most improved players across seasons (biggest jump in points/rebounds/assists).
     Let's verify per best top 5 players of each category in history
 
@@ -401,8 +389,7 @@ def _(mo):
     - Steve Nash: 11.6 ast(2006-07)
     - Chris Paul: 11.6 ast(2007-08)
     - Mark Jackson: 11.4 ast(1996-97)
-    """
-    )
+    """)
     return
 
 
@@ -422,15 +409,26 @@ def _(nba_data):
     allen_iverson = nba_data.sql("SELECT pts,reb,ast,season FROM self WHERE player_name like 'Allen Iverson' ORDER BY season")
     luka_doncic = nba_data.sql("SELECT pts,reb,ast,season FROM self WHERE player_name like 'Luka Doncic' ORDER BY season")
     lebron_james = nba_data.sql("SELECT pts,reb,ast,season FROM self WHERE player_name like 'LeBron James' ORDER BY season")
-    return (luka_doncic,)
+    return (james_harden,)
 
 
 @app.cell
-def _(luka_doncic, sns):
-    season = luka_doncic['season']
-    basket_data = luka_doncic['pts']
-    sns.set_theme(style='whitegrid')
-    sns.lineplot(x=season, y=basket_data)
+def _(james_harden, plt):
+    seasons = james_harden['season']
+    basket_pts = james_harden['pts']
+    basket_reb = james_harden['reb']
+    basket_ast = james_harden['ast']
+
+    plt.figure(figsize=(13,5))
+    plt.plot(seasons,basket_pts, label='pts')
+    plt.plot(seasons,basket_reb, '-.', label='reb')
+    plt.plot(seasons,basket_ast, '-*', label='ast')
+
+    plt.xlabel('Seasons')
+    plt.ylabel('Quantity')
+    plt.legend()
+    plt.title('James Harden Numbers')
+    plt.show()
     return
 
 
